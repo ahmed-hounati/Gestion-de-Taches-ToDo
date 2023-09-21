@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
-#include <time.h>
 
 typedef struct date
 {
@@ -19,8 +18,8 @@ typedef struct tache
     date deadline;
     char statut[100];
 } tache;
-
-int ajouter(tache tch[], int taille)
+int taille = 0;
+void ajouter(tache tch[])
 {
     if (taille == 0)
     {
@@ -32,13 +31,13 @@ int ajouter(tache tch[], int taille)
     }
 
     printf("Veuillez entrer le titre : ");
-    scanf(" %99[^\n]", tch[taille].titre);
+    scanf(" %[^\n]", tch[taille].titre);
 
     printf("Veuillez entrer la description : ");
-    scanf(" %99[^\n]", tch[taille].description);
+    scanf(" %[^\n]", tch[taille].description);
 
     printf("Veuillez entrer le statut : ");
-    scanf(" %99[^\n]", tch[taille].statut);
+    scanf(" %[^\n]", tch[taille].statut);
 
     printf("Entrer le jour : ");
     scanf("%d", &tch[taille].deadline.jour);
@@ -49,64 +48,17 @@ int ajouter(tache tch[], int taille)
     printf("Veuillez entrer l'annee : ");
     scanf("%d", &tch[taille].deadline.annee);
 
-    // Increment the taille after adding the task
     taille++;
-
-    printf("Le titre : %s \n", tch[taille - 1].titre);
-    printf("La description : %s \n", tch[taille - 1].description);
-    printf("Le statut : %s \n", tch[taille - 1].statut);
-    printf("La date est %d/%d/%d \n", tch[taille - 1].deadline.jour, tch[taille - 1].deadline.mois, tch[taille - 1].deadline.annee);
-
-    // Return the updated taille
-    return taille;
 }
 
-int ajouterTaches(tache tch[], int taille, int nombreTaches)
+void ajouterTaches(tache tch[], int nombreTaches)
 {
     for (int i = 0; i < nombreTaches; i++)
     {
-        if (taille == 0)
-        {
-            tch[taille].id = 1;
-        }
-        else
-        {
-            tch[taille].id = tch[taille - 1].id + 1;
-        }
-
-        printf("veullez entrer le titre : ");
-        scanf("%s", &tch[taille].titre);
-
-        printf("\nveullez entrer la description : ");
-        scanf("%s", &tch[taille].description);
-
-        printf("\nveullez entrer le statut : ");
-        scanf("%s", &tch[taille].statut);
-
-        printf("entrer le jour : ");
-        scanf("%d", &tch[taille].deadline.jour);
-
-        printf("entrer le mois : ");
-        scanf("%d", &tch[taille].deadline.mois);
-
-        printf("veullez entrer l annee : ");
-        scanf("%d", &tch[taille].deadline.annee);
-
-        taille++;
-
-        printf("le titre : %s \n", tch[taille - 1].titre);
-
-        printf("la description : %s \n", tch[taille - 1].description);
-
-        printf("le statut : %s \n", tch[taille - 1].statut);
-
-        printf("la date est %d/%d/%d \n", tch[taille - 1].deadline.jour, tch[taille - 1].deadline.mois, tch[taille - 1].deadline.annee);
+        ajouter(tch);
     }
-
-    return taille;
 }
-
-void trie(tache tch[], int taille)
+void trie(tache tch[])
 {
     int cmp;
     do
@@ -125,12 +77,24 @@ void trie(tache tch[], int taille)
     } while (cmp);
 }
 
+void affichages(tache tch[])
+{
+    int i;
+    for (i = 0; i < taille; i++)
+    {
+        printf("----votre taches-----\n");
+        printf("------tache %d---- \n", tch[i].id);
+        printf("titre : %s \n", tch[i].titre);
+        printf("description : %s \n", tch[i].description);
+        printf("statut : %s \n", tch[i].statut);
+        printf("la date  %d/%d/%d \n", tch[i].deadline.jour, tch[i].deadline.mois, tch[i].deadline.annee);
+    }
+}
 int main()
 {
-    char menu[50];
-    int choix, second, modifier, recherche, statistiques;
+    char menu[100];
+    int choix, affi, modifier, recherche, statistiques;
     tache tch[100];
-    int taille = 0;
     int nombreTaches;
 
     do
@@ -138,7 +102,7 @@ int main()
 
         printf("1 - Ajouter une nouvelle tache.\n");
         printf("2 - Ajouter plusieurs nouvelles taches.\n");
-        printf("3 - Ajouter la liste de toutes les taches.\n");
+        printf("3 - Afficher la liste de toutes les taches.\n");
         printf("4 - Modidier une tache.\n");
         printf("5 - Supprimer une tache par identifiant.\n");
         printf("6 - Rechercher les taches.\n");
@@ -152,16 +116,18 @@ int main()
         {
         case 1:
             printf("Ajouter une nouvelle tache.\n");
-            taille = ajouter(tch, taille);
+            ajouter(tch);
+            affichages(tch);
             break;
         case 2:
             printf("Ajouter plusieurs nouvelles taches.\n");
             printf("Combien de taches voulez vous ajouter : ");
             scanf("%d", &nombreTaches);
-            taille = ajouterTaches(tch, taille, nombreTaches);
+            ajouterTaches(tch, nombreTaches);
+            affichages(tch);
             break;
         case 3:
-            printf("Ajouter la liste de toutes les taches.\n");
+            printf("Afficher la liste de toutes les taches.\n");
             do
             {
                 printf("1 - Trier la tache par ordre alphabetique.\n");
@@ -169,12 +135,12 @@ int main()
                 printf("3 - Afficher les taches dont le deadline est 3 jours ou moins.\n");
                 printf("4 - Quitter.\n");
                 printf("Choisi le tri que vous voulez : ");
-                scanf("%d", &second);
-                switch (second)
+                scanf("%d", &affi);
+                switch (affi)
                 {
                 case 1:
                     printf("Trier les tache par ordre alphabetique.\n");
-                    trie(tch, taille);
+                    trie(tch);
                     printf("Taches triees par titre :\n");
                     for (int i = 0; i < taille; i++)
                     {
@@ -193,7 +159,8 @@ int main()
                 }
 
                 break;
-            } while (second != 4);
+            } while (affi != 4);
+            break;
         case 4:
             printf("Modidier une tache \n");
             do
