@@ -92,7 +92,6 @@ void affichages(tache tch[])
 }
 int main()
 {
-    char menu[100];
     int choix, affi, modifier, recherche, statistiques;
     tache tch[100];
     int nombreTaches;
