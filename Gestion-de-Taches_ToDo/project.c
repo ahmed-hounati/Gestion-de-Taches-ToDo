@@ -82,12 +82,13 @@ void affichages(tache tch[])
     int i;
     for (i = 0; i < taille; i++)
     {
-        printf("----votre taches-----\n");
-        printf("------tache %d---- \n", tch[i].id);
-        printf("titre : %s \n", tch[i].titre);
-        printf("description : %s \n", tch[i].description);
-        printf("statut : %s \n", tch[i].statut);
-        printf("la date  %d/%d/%d \n", tch[i].deadline.jour, tch[i].deadline.mois, tch[i].deadline.annee);
+        printf("\t\t\t\t\t----Votre taches-----\n");
+        printf("\t\t\t\t\t------Tache %d---- \n", tch[i].id);
+        printf("\t\t\t\t\tId : %d \n", tch[i].id);
+        printf("\t\t\t\t\tTitre : %s \n", tch[i].titre);
+        printf("\t\t\t\t\tDescription : %s \n", tch[i].description);
+        printf("\t\t\t\t\tStatut : %s \n", tch[i].statut);
+        printf("\t\t\t\t\tLa date  %d/%d/%d \n", tch[i].deadline.jour, tch[i].deadline.mois, tch[i].deadline.annee);
     }
 }
 int main()
@@ -98,15 +99,15 @@ int main()
 
     do
     {
-
-        printf("1 - Ajouter une nouvelle tache.\n");
-        printf("2 - Ajouter plusieurs nouvelles taches.\n");
-        printf("3 - Afficher la liste de toutes les taches.\n");
-        printf("4 - Modidier une tache.\n");
-        printf("5 - Supprimer une tache par identifiant.\n");
-        printf("6 - Rechercher les taches.\n");
-        printf("7 - Statistiques.\n");
-        printf("8 - Quitter.\n");
+        printf("\n\t\t\t\t\t-------Menu-------\n\n");
+        printf("\n\t\t\t\t\t1 - Ajouter une nouvelle tache.");
+        printf("\n\t\t\t\t\t2 - Ajouter plusieurs nouvelles taches.");
+        printf("\n\t\t\t\t\t3 - Afficher la liste de toutes les taches.");
+        printf("\n\t\t\t\t\t4 - Modidier une tache.");
+        printf("\n\t\t\t\t\t5 - Supprimer une tache par identifiant.");
+        printf("\n\t\t\t\t\t6 - Rechercher les taches.");
+        printf("\n\t\t\t\t\t7 - Statistiques.");
+        printf("\n\t\t\t\t\t8 - Quitter.\n");
 
         printf("Votre choix est : ");
         scanf("%d", &choix);
@@ -129,29 +130,29 @@ int main()
             printf("Afficher la liste de toutes les taches.\n");
             do
             {
-                printf("1 - Trier la tache par ordre alphabetique.\n");
-                printf("2 - Trier la tache par deadline.\n");
-                printf("3 - Afficher les taches dont le deadline est 3 jours ou moins.\n");
-                printf("4 - Quitter.\n");
-                printf("Choisi le tri que vous voulez : ");
+                printf("\t\t\t\t\t1 - Trier la tache par ordre alphabetique.\n");
+                printf("\t\t\t\t\t2 - Trier la tache par deadline.\n");
+                printf("\t\t\t\t\t3 - Afficher les taches dont le deadline est 3 jours ou moins.\n");
+                printf("\t\t\t\t\t4 - Quitter.\n");
+                printf("\t\t\t\t\tChoisi le tri que vous voulez : ");
                 scanf("%d", &affi);
                 switch (affi)
                 {
                 case 1:
-                    printf("Trier les tache par ordre alphabetique.\n");
+                    printf("\t\t\t\t\tTrier les tache par ordre alphabetique.\n");
                     trie(tch);
-                    printf("Taches triees par titre :\n");
+                    printf("\t\t\t\t\tTaches triees par titre :\n");
                     for (int i = 0; i < taille; i++)
                     {
                         printf("Tache %d : %s\n", tch[i].id, tch[i].titre);
                     }
                     break;
                 case 2:
-                    printf("Trier les tache par deadline.\n");
+                    printf("\t\t\t\t\tTrier les tache par deadline.\n");
                 case 3:
-                    printf("Afficher les taches dont le deadline est dans 3 jours ou moins.\n");
+                    printf("\t\t\t\t\tAfficher les taches dont le deadline est dans 3 jours ou moins.\n");
                 case 4:
-                    printf("Quitter.\n");
+                    printf("\t\t\t\t\tQuitter.\n");
                 default:
                     printf("choix invalid.\n");
                     break;
@@ -164,7 +165,7 @@ int main()
             printf("Modidier une tache \n");
             do
             {
-                printf("1 - Modifier la description d une tache.\n");
+                printf("\t\t\t\t\t1 - Modifier la description d une tache.\n");
                 printf("2 - Modifier la statut d une tache.\n");
                 printf("3 - Modifier la deadline d une tache.\n");
                 printf("4 - Quitter \n");
@@ -197,10 +198,10 @@ int main()
             printf("Rechercher les taches \n");
             do
             {
-                printf("1 - Rechercher une tache par son identifiant.\n");
-                printf("2 - Rechercher une tache par son titre.\n");
-                printf("3 - Quitter.\n");
-                printf("Choisi le modifier que vous voulez : ");
+                printf("\t\t\t\t\t1 - Rechercher une tache par son identifiant.\n");
+                printf("\t\t\t\t\t2 - Rechercher une tache par son titre.\n");
+                printf("\t\t\t\t\t3 - Quitter.\n");
+                printf("Choisi le recherche que vous voulez : ");
                 scanf("%d", &recherche);
                 switch (recherche)
                 {
@@ -224,10 +225,10 @@ int main()
             printf("Statistiques \n");
             do
             {
-                printf("1 - Afficher le nombre total des taches.\n");
-                printf("2 - Afficher le nombre de taches comletes et incompletes.\n");
-                printf("3 - afficher le nombre dejours restants jusqu au delai de chaque tache.\n");
-                printf("4 - Quitter.\n");
+                printf("\t\t\t\t\t1 - Afficher le nombre total des taches.\n");
+                printf("\t\t\t\t\t2 - Afficher le nombre de taches comletes et incompletes.\n");
+                printf("\t\t\t\t\t3 - afficher le nombre dejours restants jusqu au delai de chaque tache.\n");
+                printf("\t\t\t\t\t4 - Quitter.\n");
                 printf("choisi le statistique que vous voulez : ");
                 scanf("%d", &statistiques);
                 switch (statistiques)
@@ -252,7 +253,7 @@ int main()
 
             break;
         case 8:
-            printf("Quitter \n");
+            printf("\t\t\t\t\tQuitter \n");
 
         default:
             printf("Choix invalide \n");
