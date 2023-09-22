@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <time.h>
+
+int taille = 0;
 
 typedef struct date
 {
@@ -18,7 +21,7 @@ typedef struct tache
     date deadline;
     char statut[100];
 } tache;
-int taille = 0;
+
 void ajouter(tache tch[])
 {
     if (taille == 0)
@@ -37,9 +40,9 @@ void ajouter(tache tch[])
     scanf(" %[^\n]", tch[taille].description);
 
     int choix;
-    printf("1 - Si votre tach est a realiser \n");
-    printf("2 - Si votre tache est a en cours de realisation \n");
-    printf("3 - Si votre tache est a en finalisee \n");
+    printf("\n\t\t\t\t\t1 - Si votre tach est a realiser \n");
+    printf("\n\t\t\t\t\t2 - Si votre tache est a en cours de realisation \n");
+    printf("\n\t\t\t\t\t3 - Si votre tache est a en finalisee \n");
     printf("votre choix est : ");
     scanf("%d", &choix);
     switch (choix)
@@ -48,7 +51,7 @@ void ajouter(tache tch[])
         strcpy(tch[taille].statut, " est a realiser \n");
         break;
     case 2:
-        strcpy(tch[taille].statut, " est a en cours de réalisation \n");
+        strcpy(tch[taille].statut, " est a en cours de realisation \n");
         break;
     case 3:
         strcpy(tch[taille].statut, " est a finalisee \n");
@@ -57,13 +60,13 @@ void ajouter(tache tch[])
         break;
     }
 
-    printf("Entrer le jour : ");
+    printf("\n\t\t\t\t\tEntrer le jour de deadline: ");
     scanf("%d", &tch[taille].deadline.jour);
 
-    printf("Entrer le mois : ");
+    printf("\n\t\t\t\t\tEntrer le mois de deadline : ");
     scanf("%d", &tch[taille].deadline.mois);
 
-    printf("Veuillez entrer l'annee : ");
+    printf("\n\t\t\t\t\tVeuillez entrer l'annee de deadline : ");
     scanf("%d", &tch[taille].deadline.annee);
 
     taille++;
@@ -86,8 +89,8 @@ void affichages(tache tch[])
         printf("\t\t\t\t\tId : %d \n", tch[i].id);
         printf("\t\t\t\t\tTitre : %s \n", tch[i].titre);
         printf("\t\t\t\t\tDescription : %s \n", tch[i].description);
-        printf("\t\t\t\t\tStatut : %s \n", tch[i].statut);
-        printf("\t\t\t\t\tLa date  %d/%d/%d \n", tch[i].deadline.jour, tch[i].deadline.mois, tch[i].deadline.annee);
+        printf("\t\t\t\t\tStatut : %s ", tch[i].statut);
+        printf("\t\t\t\t\tLe deadline  %d/%d/%d \n", tch[i].deadline.jour, tch[i].deadline.mois, tch[i].deadline.annee);
     }
 }
 
@@ -109,6 +112,7 @@ void trie(tache tch[])
         }
     } while (cmp);
 }
+
 int compareDates(date date1, date date2)
 {
     if (date1.annee != date2.annee)
@@ -125,19 +129,50 @@ int compareDates(date date1, date date2)
     }
 }
 
-void triedead(tache T[])
+void triedead(tache tch[])
 {
     tache tmp;
     for (int i = 0; i < taille - 1; i++)
     {
         for (int j = 0; j < taille - i - 1; j++)
         {
-            if (compareDates(T[j].deadline, T[j + 1].deadline) > 0)
+            if (compareDates(tch[j].deadline, tch[j + 1].deadline) > 0)
             {
-                tmp = T[j];
-                T[j] = T[j + 1];
-                T[j + 1] = tmp;
+                tmp = tch[j];
+                tch[j] = tch[j + 1];
+                tch[j + 1] = tmp;
             }
+        }
+    }
+}
+
+void dead_line(tache tch[])
+{
+    int i;
+    int delai_jour;
+    int jours;
+    int tab[taille];
+    time_t seconds = time(NULL);
+    struct tm *current_time = localtime(&seconds);
+    int currentYear = (current_time->tm_year + 1900);
+    int currentMonth = (current_time->tm_mon + 1);
+    int currentDay = current_time->tm_mday;
+
+    for (i = 0; i < taille; i++)
+    {
+        jours = tch[i].deadline.annee * 365 + tch[i].deadline.mois * 30 + tch[i].deadline.jour;
+        delai_jour = jours - (currentYear * 365 + currentMonth * 30 + currentDay);
+        tab[i] = delai_jour;
+    }
+    for (int i = 0; i < taille; i++)
+    {
+        if (tab[i] == 0)
+        {
+            printf("id : %d | Titre : %s | Deadline en : Aujourdui\n", tch[i].id, tch[i].titre);
+        }
+        else if (tab[i] <= 3)
+        {
+            printf("id : %d | Titre : %s | Deadline en : %d jours\n", tch[i].id, tch[i].titre, tab[i] - 1);
         }
     }
 }
@@ -159,18 +194,38 @@ void modifierDesc(tache tch[])
 
 void modifierStatut(tache tch[])
 {
-    int id;
+    int id, choix;
     printf("Veuller entrer l Id que vous voulez modifier : ");
     scanf("%d", &id);
     for (int i = 0; i < taille; i++)
     {
         if (tch[i].id == id)
         {
-            printf("Taper la nouvelle statut de la tache :");
-            scanf(" %[^\n]", tch[i].statut);
+            printf("\n Taper la nouvelle statut de la tache :");
+            printf("\n\t\t\t\t\t1 - Si votre tach est a realiser \n");
+            printf("\n\t\t\t\t\t2 - Si votre tache est a en cours de realisation \n");
+            printf("\n\t\t\t\t\t3 - Si votre tache est a en finalisee \n");
+            printf("votre choix est : ");
+            scanf("%d", &choix);
+            switch (choix)
+            {
+            case 1:
+                strcpy(tch[i].statut, " est a realiser \n");
+                break;
+            case 2:
+                strcpy(tch[i].statut, " est a en cours de realisation \n");
+                break;
+            case 3:
+                strcpy(tch[i].statut, " est a finalisee \n");
+                break;
+            default:
+                printf("choix invalid.\n");
+                break;
+            }
         }
     }
 }
+
 void modifierdead(tache tch[])
 {
     int id;
@@ -181,17 +236,107 @@ void modifierdead(tache tch[])
         if (tch[i].id == id)
         {
             printf("Taper la nouvelle jour :");
-            scanf("%d", tch[i].deadline.jour);
+            scanf("%d", &tch[i].deadline.jour);
             printf("Taper la nouvelle mois : ");
-            scanf("%d", tch[i].deadline.mois);
+            scanf("%d", &tch[i].deadline.mois);
             printf("Taper la nouvelle annee :");
-            scanf("%d", tch[i].deadline.annee);
+            scanf("%d", &tch[i].deadline.annee);
         }
     }
 }
+
+void rechercheId(tache tch[])
+{
+    int id;
+    printf("Veuller entrer l Id que vous voulez rechercher : ");
+    scanf("%d", &id);
+    for (int i = 0; i < taille; i++)
+    {
+        if (tch[i].id == id)
+        {
+            affichages(tch);
+        }
+        else
+            printf("Il n y a aucune tache avec cet ID ");
+    }
+}
+
+void recherchetitre(tache tch[])
+{
+    char titre[100];
+    printf("Veuller entrer le titre que vous voulez rechercher : ");
+    scanf("%s", &titre);
+    for (int i = 0; i < taille; i++)
+    {
+        if (tch[i].titre == titre)
+        {
+            affichages(tch);
+        }
+        else
+            printf("\nIl n y a aucune tache avec ce titre \n");
+    }
+}
+
+void supprimerTahe(tache tch[])
+{
+    int id;
+    printf("Veuller entrer l Id que vous voulez supprimer : ");
+    scanf("%d", &id);
+    int i, found = 0;
+
+    for (i = 0; i < taille; i++)
+    {
+        if (tch[i].id == id)
+        {
+            found = 1;
+
+            for (int j = i; j < taille; j++)
+            {
+                tch[j] = tch[j + 1];
+            }
+
+            (taille)--;
+            printf("\t\t\t\t\tLa tache avec l identifiant %d a ete supprimee.\n", id);
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        printf("\t\t\t\t\tAucune tache avec l identifiant %d n a ete trouvee.\n", id);
+    }
+}
+
+void NombreTotal(int taille)
+{
+    printf("\n\t\t\t\t\tLe nombre total de taches est : %d\n", taille);
+}
+
+void complet(tache tch[])
+{
+    int complete = 0;
+    int incomplete = 0;
+
+    for (int i = 0; i < taille; i++)
+    {
+        if ((strcmp(tch[i].statut, " est a finalisee \n") == 0))
+        {
+            complete++;
+        }
+        else
+        {
+            incomplete++;
+        }
+    }
+
+    printf("Nombre de taches completes : %d\n", complete);
+    printf("Nombre de taches incompletes : %d\n\n", incomplete);
+}
+
 int main()
 {
     int choix, affi, modifier, recherche, statistiques;
+    int day, month, year;
     tache tch[100];
     int nombreTaches;
 
@@ -239,19 +384,18 @@ int main()
                 case 1:
                     printf("\t\t\t\t\tTrier les tache par ordre alphabetique.\n");
                     trie(tch);
-                    printf("\t\t\t\t\tTaches triees par titre :\n");
-                    for (int i = 0; i < taille; i++)
-                    {
-                        affichages(tch);
-                    }
+                    printf("\t\t\t\t\tLe trie par ordre alphabitique est :");
+                    affichages(tch);
                     break;
                 case 2:
                     printf("\t\t\t\t\tTrier les tache par deadline.\n");
                     triedead(tch);
+                    printf("\t\t\t\t\tLe trie par deadline est :");
                     affichages(tch);
                     break;
                 case 3:
                     printf("\t\t\t\t\tAfficher les taches dont le deadline est dans 3 jours ou moins.\n");
+                    dead_line(tch);
                     break;
                 case 4:
                     printf("\t\t\t\t\tQuitter.\n");
@@ -302,6 +446,7 @@ int main()
             break;
         case 5:
             printf("Supprimer une tache par identifiant \n");
+            supprimerTahe(tch);
             break;
         case 6:
             printf("Rechercher les taches \n");
@@ -316,9 +461,11 @@ int main()
                 {
                 case 1:
                     printf("Rechercher une tache par son identifiant.\n");
+                    rechercheId(tch);
                     break;
                 case 2:
                     printf("Rechercher une tache par son titre.\n");
+                    recherchetitre(tch);
                     break;
                 case 3:
                     printf("Quitter.\n");
@@ -344,9 +491,11 @@ int main()
                 {
                 case 1:
                     printf("Afficher le nombre total des taches.\n");
+                    NombreTotal(taille);
                     break;
                 case 2:
                     printf("Afficher le nombre de taches comletes et incompletes.\n");
+                    complet(tch);
                     break;
                 case 3:
                     printf("Afficher le nombre dejours restants jusqu au delai de chaque tache.\n");
