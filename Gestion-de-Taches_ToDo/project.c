@@ -250,7 +250,7 @@ void rechercheId(tache tch[])
 {
     int id;
     int found = 0;
-    printf("\n\t\t\t\t\tVeuillez entrer l'ID que vous voulez rechercher : ");
+    printf("\n\t\t\t\t\tVeuillez entrer l ID que vous voulez rechercher : ");
     scanf("%d", &id);
     for (int i = 0; i < taille; i++)
     {
@@ -269,7 +269,7 @@ void rechercheId(tache tch[])
 
     if (!found)
     {
-        printf("\n\t\t\t\t\tIl n'y a aucune tache avec cet ID\n\n");
+        printf("\n\t\t\t\t\tIl n y a aucune tache avec cet ID\n\n");
     }
 }
 
@@ -296,7 +296,7 @@ void recherchetitre(tache tch[])
 
     if (!found)
     {
-        printf("\n\t\t\t\t\tIl n'y a aucune tache avec cet titre\n\n");
+        printf("\n\t\t\t\t\tIl n y a aucune tache avec cet titre\n\n");
     }
 }
 
@@ -420,27 +420,27 @@ int main()
             do
             {
                 printf("\t\t\t\t\t1 - Trier la tache par ordre alphabetique.\n");
-                printf("\t\t\t\t\t2 - Trier la tache par deadline.\n");
-                printf("\t\t\t\t\t3 - Afficher les taches dont le deadline est 3 jours ou moins.\n");
-                printf("\t\t\t\t\t4 - Quitter.\n");
-                printf("\t\t\t\t\tChoisi le tri que vous voulez : \n");
+                printf("\n\t\t\t\t\t2 - Trier la tache par deadline.\n");
+                printf("\n\t\t\t\t\t3 - Afficher les taches dont le deadline est 3 jours ou moins.\n");
+                printf("\n\t\t\t\t\t4 - Quitter.\n");
+                printf("\n\t\t\t\t\tChoisi le tri que vous voulez : ");
                 scanf("%d", &affi);
                 switch (affi)
                 {
                 case 1:
                     printf("\n\t\t\t\t\tTrier les tache par ordre alphabetique.\n\n");
                     trie(tch);
-                    printf("\t\t\t\t\tLe trie par ordre alphabitique est : \n");
+                    printf("\t\t\t\t\tLe trie par ordre alphabitique : \n");
                     affichages(tch);
                     break;
                 case 2:
-                    printf("\t\t\t\t\tTrier les tache par deadline.\n");
+                    printf("\t\t\t\t\tTrier les tache par deadline : \n");
                     triedead(tch);
                     printf("\t\t\t\t\tLe trie par deadline est : \n");
                     affichages(tch);
                     break;
                 case 3:
-                    printf("\t\t\t\t\tAfficher les taches dont le deadline est dans 3 jours ou moins.\n");
+                    printf("\t\t\t\t\tAfficher les taches dont le deadline est dans 3 jours ou moins :\n");
                     dead_line(tch);
                     break;
                 case 4:
@@ -517,7 +517,7 @@ int main()
                     printf("\n\t\t\t\t\tQuitter.\n");
                     break;
                 default:
-                    printf("\n\t\t\t\t\tchoix invalid \n");
+                    printf("\n\t\t\t\t\tChoix invalid \n");
                     break;
                 }
             } while (recherche != 3);
@@ -559,6 +559,7 @@ int main()
             break;
         case 8:
             printf("\t\t\t\t\tQuitter \n");
+            printf("\n\t\t\t\t\tAu revoir ! Passez une excellente journee !\n");
             break;
         default:
             printf("\n\t\t\t\t\tChoix invalide \n");
