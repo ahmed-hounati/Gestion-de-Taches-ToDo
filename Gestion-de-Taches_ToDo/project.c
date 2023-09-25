@@ -33,14 +33,14 @@ void ajouter(tache tch[])
         tch[taille].id = tch[taille - 1].id + 1;
     }
 
-    printf("\n\t\t\t\t\tVeuillez entrer le titre : ");
+    printf("\n\t\t\t\t\tVeuillez entrer le titre de tache : ");
     scanf(" %[^\n]", tch[taille].titre);
 
-    printf("\n\t\t\t\t\tVeuillez entrer la description : ");
+    printf("\n\t\t\t\t\tVeuillez entrer la description de tache : ");
     scanf(" %[^\n]", tch[taille].description);
 
     int choix;
-    printf("\n\t\t\t\t\t1 - Si votre tach est a realiser \n");
+    printf("\n\t\t\t\t\t1 - Si votre tache est a realiser \n");
     printf("\n\t\t\t\t\t2 - Si votre tache est a en cours de realisation \n");
     printf("\n\t\t\t\t\t3 - Si votre tache est a en finalisee \n");
     printf("\n\t\t\t\t\tVotre choix est : ");
@@ -61,13 +61,13 @@ void ajouter(tache tch[])
         break;
     }
 
-    printf("\n\t\t\t\t\tEntrer le jour de deadline: ");
+    printf("\n\t\t\t\t\tEntrer le jour de deadline : ");
     scanf("%d", &tch[taille].deadline.jour);
 
     printf("\n\t\t\t\t\tEntrer le mois de deadline : ");
     scanf("%d", &tch[taille].deadline.mois);
 
-    printf("\n\t\t\t\t\tVeuillez entrer l'annee de deadline : ");
+    printf("\n\t\t\t\t\tVeuillez entrer l annee de deadline : ");
     scanf("%d", &tch[taille].deadline.annee);
 
     taille++;
@@ -278,7 +278,7 @@ void recherchetitre(tache tch[])
     int found = 0;
     char titre[100];
     printf("\n\t\t\t\t\tVeuller entrer le titre que vous voulez rechercher : ");
-    scanf("%s", &titre);
+    scanf(" %[^\n]", &titre);
     for (int i = 0; i < taille; i++)
     {
         if (strcmp(tch[i].titre, titre) == 0)
@@ -440,11 +440,11 @@ int main()
                     affichages(tch);
                     break;
                 case 3:
-                    printf("\t\t\t\t\tAfficher les taches dont le deadline est dans 3 jours ou moins :\n");
+                    printf("\n\t\t\t\t\tAfficher les taches dont le deadline est dans 3 jours ou moins :\n");
                     dead_line(tch);
                     break;
                 case 4:
-                    printf("\t\t\t\t\tQuitter.\n");
+                    printf("\n\t\t\t\t\tQuitter.\n");
                     break;
                 default:
                     printf("\n\t\t\t\t\tchoix invalid.\n");
